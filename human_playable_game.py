@@ -11,7 +11,7 @@ from game_world.racetrack import RaceTrack, load_track
 from random_bot import random_move
 import traceback
 
-TRACK = load_track("./tracks/bbmaze.pkl")
+TRACK = load_track("./tracks/test4.pkl")
 PLAYER = random_move
 REPLAY_SPEED = 0.05  # seconds per move in the replay. (lower is faster)
 SHOW_REPLAY = True

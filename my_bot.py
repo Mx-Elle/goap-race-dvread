@@ -22,8 +22,8 @@ class PlannerAgent:
 
     def move(self, loc, track):
 
-        if self.plan is None:
-            self.plan, self.moves = make_plan(track)
+        if self.moves is None:
+            self.moves = make_plan(track)
             self.path_index = 0
 
         next_pos = self.moves[self.path_index + 1]
@@ -101,10 +101,10 @@ def make_plan(track: RaceTrack):
                 total_cost = node["cost"] + len(path)
                 if total_cost < best_total_cost:
                     best_total_cost = total_cost
-                    node['path'] = node['path'] + path[1:] if node['path'] is not None else path
-                    best_solution = (node, state_track)
+                    best_path = node['path'] + path[1:] if node['path'] is not None else path
+                    best_solution = (best_path, state_track)
         
-        for color, pos, dist in reachable_buttons(state_track, node["pos"]):
+        for button_color, pos, dist in reachable_buttons(state_track, node["pos"]):
 
             if pos == node["pos"]:
                 continue
@@ -124,14 +124,14 @@ def make_plan(track: RaceTrack):
                 "pos": pos,
                 "cost": node["cost"] + dist,  
                 "parent": node,
-                "action": color,
+                "action": button_color,
                 "path": node['path'] + path[1:] if node['path'] is not None else path,
             }
             heapq.heappush(frontier, (child["cost"], counter, child))
             counter += 1
     if best_solution is not None:
-        node, state_track = best_solution
-        return reconstruct_plan(node, state_track)
+        full_path, state_track = best_solution
+        return full_path
 
 def simulate_path(path, initial_state, track: RaceTrack):
 
@@ -153,15 +153,7 @@ def simulate_path(path, initial_state, track: RaceTrack):
 
 
 
-def reconstruct_plan(node, track):
-    actions = []
-    moves = node['path']
-    while node ["parent"] is not None:
-        actions.append(node["action"])
-        node = node["parent"]
-    actions.reverse()
-    actions.append(None)  
-    return actions, moves
+
 
 def reconstruct_path(cameFrom, current, end):
     total_path =[]

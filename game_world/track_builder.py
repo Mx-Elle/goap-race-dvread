@@ -8,8 +8,8 @@ from racetrack import RaceTrack, blank_track, load_track
 WIDTH = 600
 GRID_SIZE = (20, 20)
 # Where do you want to save this track? (Press 'enter' to save)
-SAVE_FILE_NAME = "tracks/test3.pkl"
-STARTING_TRACK_NAME = None # None if you want to start blank.
+SAVE_FILE_NAME = "tracks/test4.pkl"
+STARTING_TRACK_NAME = "tracks/test4.pkl" # None if you want to start blank.
 # Hold A to paint in deactivated walls
 # press up and down on arrow keys to increase brush size
 
